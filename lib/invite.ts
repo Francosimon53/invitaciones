@@ -35,6 +35,15 @@ export function normalizePhone(raw: string | null | undefined): string | null {
   return `+${digits}`;
 }
 
+/** "+17135550101" → "(713) 555-0101" para leerlo en el panel; otros países, tal cual. */
+export function formatPhone(phone: string | null): string | null {
+  if (!phone) return null;
+  const d = phone.replace(/\D/g, "");
+  if (d.length === 11 && d.startsWith("1")) return `(${d.slice(1, 4)}) ${d.slice(4, 7)}-${d.slice(7)}`;
+  if (d.length === 10) return `(${d.slice(0, 3)}) ${d.slice(3, 6)}-${d.slice(6)}`;
+  return phone;
+}
+
 /** Mensaje listo para WhatsApp, en el idioma del invitado. Sin nombre = mensaje del enlace general. */
 export function inviteMessage(ev: EventData, lang: Lang, name: string, link: string): string {
   const when = `${longDate(ev, lang)} · ${timeRange(ev).split(" — ")[0]}`;

@@ -1,5 +1,5 @@
 import "server-only";
-import { SITE_URL } from "./site";
+import { siteUrl } from "./site-url";
 import { eventLink, panelLink } from "./invite";
 import { deliveryMessage, reviewMessage } from "./messages";
 import type { AdminEventRow } from "./types";
@@ -13,12 +13,13 @@ export interface SavedLinks {
 }
 
 /** Enlaces y mensajes listos para pegar en Etsy. */
-export function linksFor(ev: AdminEventRow): SavedLinks {
-  const args = { siteUrl: SITE_URL, slug: ev.slug, hostKey: ev.host_key, hostName: ev.host_name, honoree: ev.honoree };
+export async function linksFor(ev: AdminEventRow): Promise<SavedLinks> {
+  const site = await siteUrl();
+  const args = { siteUrl: site, slug: ev.slug, hostKey: ev.host_key, hostName: ev.host_name, honoree: ev.honoree };
   return {
-    invitation: eventLink(SITE_URL, ev.slug),
-    preview: `${SITE_URL}/${ev.slug}?vista=${ev.host_key}`,
-    panel: panelLink(SITE_URL, ev.slug, ev.host_key),
+    invitation: eventLink(site, ev.slug),
+    preview: `${site}/${ev.slug}?vista=${ev.host_key}`,
+    panel: panelLink(site, ev.slug, ev.host_key),
     review: reviewMessage(args),
     delivery: deliveryMessage(args),
   };

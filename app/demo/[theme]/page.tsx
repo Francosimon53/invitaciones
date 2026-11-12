@@ -8,7 +8,7 @@ import { buildView } from "@/lib/view";
 import { asTheme } from "@/lib/themes";
 import { asLang } from "@/lib/i18n";
 import { coverVersion } from "@/lib/cover-version";
-import { SITE_URL } from "@/lib/site";
+import { siteUrl } from "@/lib/site-url";
 
 export const dynamic = "force-dynamic";
 
@@ -19,7 +19,8 @@ export async function generateMetadata({ params }: { params: Params }): Promise<
   if (!theme) return {};
   const ev = demoEvent(theme);
   const v = coverVersion({ theme, honoree: ev.honoree, forName: null, lang: "es" });
-  return invitationMetadata(ev, "es", { url: `${SITE_URL}/demo/${theme}`, cover: `${SITE_URL}/api/cover?demo=${theme}&lang=es&v=${v}` });
+  const site = await siteUrl();
+  return invitationMetadata(ev, "es", { url: `${site}/demo/${theme}`, cover: `${site}/api/cover?demo=${theme}&lang=es&v=${v}` });
 }
 
 /** Invitación de muestra de cada estilo (la del enlace de Etsy). La confirmación se simula. */

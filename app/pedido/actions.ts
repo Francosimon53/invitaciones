@@ -6,6 +6,7 @@ import { asTheme } from "@/lib/themes";
 import { PHRASES, stateByCode } from "@/lib/places";
 import type { OrderData } from "@/lib/types";
 import { notifyNewOrder } from "@/lib/notify";
+import { siteUrl } from "@/lib/site-url";
 
 export type OrderState =
   | { status: "idle" }
@@ -80,7 +81,8 @@ export async function submitOrderAction(_prev: OrderState, fd: FormData): Promis
 
   try {
     const { code } = await submitOrder(data, etsy);
-    after(() => notifyNewOrder(code, etsy, data).catch(() => undefined));
+    const site = await siteUrl();
+    after(() => notifyNewOrder(code, etsy, data, site).catch(() => undefined));
     return { status: "ok", code, name: data.quinceanera };
   } catch (e) {
     const msg = e instanceof Error ? e.message : "";

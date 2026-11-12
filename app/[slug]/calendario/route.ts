@@ -3,7 +3,6 @@ import { getEvent } from "@/lib/db";
 import { buildStrings } from "@/lib/i18n";
 import { THEMES } from "@/lib/themes";
 import { eventDetails } from "@/lib/view";
-import { SITE_URL } from "@/lib/site";
 
 export const dynamic = "force-dynamic";
 
@@ -14,7 +13,7 @@ export async function GET(req: Request, { params }: { params: Promise<{ slug: st
   if (!ev) return new Response("not found", { status: 404 });
   const lang = new URL(req.url).searchParams.get("lang") === "en" ? "en" : "es";
   const title = eventTitle(ev, THEMES[ev.theme].title[lang], lang);
-  const ics = buildIcs(ev, title, eventDetails(ev, buildStrings(lang, ev)), `${SITE_URL}/${ev.slug}`);
+  const ics = buildIcs(ev, title, eventDetails(ev, buildStrings(lang, ev)), `${new URL(req.url).origin}/${ev.slug}`);
   return new Response(ics, {
     headers: {
       "Content-Type": "text/calendar; charset=utf-8",

@@ -7,7 +7,7 @@ import { guestCoverUrl } from "@/lib/covers";
 import { buildView } from "@/lib/view";
 import { toReservation } from "@/lib/reservation";
 import { personalLink } from "@/lib/invite";
-import { SITE_URL } from "@/lib/site";
+import { siteUrl } from "@/lib/site-url";
 
 export const dynamic = "force-dynamic";
 
@@ -18,9 +18,10 @@ export async function generateMetadata({ params }: { params: Params }): Promise<
   const { slug, token } = await params;
   const [ev, guest] = await Promise.all([loadEvent(slug, null), loadGuest(slug, token)]);
   if (!ev || !guest) return {};
+  const site = await siteUrl();
   return invitationMetadata(ev, guest.lang, {
-    url: personalLink(SITE_URL, ev.slug, guest.token),
-    cover: guestCoverUrl(SITE_URL, ev, guest),
+    url: personalLink(site, ev.slug, guest.token),
+    cover: guestCoverUrl(site, ev, guest),
     forName: guest.display_name,
   });
 }

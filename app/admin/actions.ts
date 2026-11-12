@@ -142,7 +142,7 @@ export async function saveEventAction(_prev: SaveEventState, fd: FormData): Prom
       }
     }
     revalidatePath("/admin");
-    return { status: "ok", event: saved, warnings, links: linksFor(saved) };
+    return { status: "ok", event: saved, warnings, links: await linksFor(saved) };
   } catch (e) {
     const msg = e instanceof Error ? e.message : "";
     if (/duplicate key|unique/i.test(msg)) return { status: "error", message: "Ese enlace ya existe. Vuelve a guardar para generar otro." };

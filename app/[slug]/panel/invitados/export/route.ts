@@ -1,7 +1,6 @@
 import { checkHostKey, getEvent, listGuests } from "@/lib/db";
 import { inviteMessage, personalLink } from "@/lib/invite";
 import { csvResponse } from "@/lib/csv";
-import { SITE_URL } from "@/lib/site";
 
 export const dynamic = "force-dynamic";
 
@@ -12,10 +11,11 @@ export async function GET(req: Request, { params }: { params: Promise<{ slug: st
   const ev = await getEvent(slug, key);
   if (!ev) return new Response("not found", { status: 404 });
   const rows = await listGuests(slug, key);
+  const site = new URL(req.url).origin;
   return csvResponse(
     ["Nombre", "Teléfono", "Idioma", "Enlace", "Mensaje", "Estado", "Respondió"],
     rows.map((r) => {
-      const link = personalLink(SITE_URL, slug, r.token);
+      const link = personalLink(site, slug, r.token);
       const lang = r.lang === "en" ? "en" : "es";
       return [
         r.display_name,

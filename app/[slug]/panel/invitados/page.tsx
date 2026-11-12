@@ -1,9 +1,9 @@
 import type { Metadata } from "next";
 import { checkHostKey, getEvent, listGuests } from "@/lib/db";
-import { eventLink, inviteMessage, personalLink, whatsappUrl } from "@/lib/invite";
+import { eventLink, formatPhone, inviteMessage, personalLink, whatsappUrl } from "@/lib/invite";
 import { guestCoverReady } from "@/lib/covers";
 import { first, type SearchParams } from "@/lib/page-helpers";
-import { SITE_URL } from "@/lib/site";
+import { siteUrl } from "@/lib/site-url";
 import { THEMES } from "@/lib/themes";
 import { PanelNav, KeyGate } from "@/components/PanelNav";
 import { CopyButton } from "@/components/CopyButton";
@@ -36,7 +36,8 @@ export default async function HostGuests({ params, searchParams }: { params: Par
   const responded = rows.filter((r) => r.rsvp_id).length;
   const attending = rows.filter((r) => r.attending).length;
   const missingCovers = rows.filter((r) => !guestCoverReady(ev, r)).length;
-  const generic = eventLink(SITE_URL, slug);
+  const site = await siteUrl();
+  const generic = eventLink(site, slug);
   const genericMsg = inviteMessage(ev, ev.lang, "", generic);
 
   return (
@@ -101,7 +102,7 @@ export default async function HostGuests({ params, searchParams }: { params: Par
       ) : (
         <ul className="guest-list">
           {rows.map((r) => {
-            const link = personalLink(SITE_URL, slug, r.token);
+            const link = personalLink(site, slug, r.token);
             const lang = r.lang === "en" ? "en" : "es";
             const msg = inviteMessage(ev, lang, r.display_name, link);
             const st = status(r);
@@ -112,7 +113,7 @@ export default async function HostGuests({ params, searchParams }: { params: Par
                   <div>
                     <p className="guest-name">{r.display_name}</p>
                     <p className="muted small">
-                      {r.phone ?? "sin teléfono"} · {lang.toUpperCase()}
+                      {formatPhone(r.phone) ?? "sin teléfono"} · {lang.toUpperCase()}
                     </p>
                   </div>
                   <div className="pills">

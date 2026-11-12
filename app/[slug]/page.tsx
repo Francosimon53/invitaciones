@@ -7,7 +7,7 @@ import { generalCoverUrl } from "@/lib/covers";
 import { buildView } from "@/lib/view";
 import { toReservation } from "@/lib/reservation";
 import { asLang } from "@/lib/i18n";
-import { SITE_URL } from "@/lib/site";
+import { siteUrl } from "@/lib/site-url";
 
 export const dynamic = "force-dynamic";
 
@@ -18,7 +18,8 @@ export async function generateMetadata({ params, searchParams }: { params: Param
   const [{ slug }, sp] = await Promise.all([params, searchParams]);
   const ev = await loadEvent(slug, first(sp.vista) || null);
   if (!ev) return { title: "Invitación no encontrada" };
-  return invitationMetadata(ev, ev.lang, { url: `${SITE_URL}/${ev.slug}`, cover: generalCoverUrl(SITE_URL, ev, ev.lang) });
+  const site = await siteUrl();
+  return invitationMetadata(ev, ev.lang, { url: `${site}/${ev.slug}`, cover: generalCoverUrl(site, ev, ev.lang) });
 }
 
 /**

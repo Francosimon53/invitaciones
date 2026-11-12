@@ -23,7 +23,7 @@ async function jpeg(input: CoverInput): Promise<Buffer> {
 
 /**
  * Portada de la invitación para la vista previa del enlace: el sobre cerrado, JPEG liviano.
- *   /api/cover?demo=<estilo>&lang=es           → muestra
+ *   /api/cover?demo=<estilo>&lang=es[&para=…]  → muestra (con o sin nombre de invitado)
  *   /api/cover?e=<evento>&lang=es&v=…           → enlace general del evento
  *   /api/cover?e=<evento>&token=<token>&v=…     → enlace personal (nombre e idioma del invitado)
  * `v` cambia con el contenido, para que los cachés (CDN y WhatsApp) nunca sirvan una portada vieja.
@@ -35,7 +35,9 @@ export async function GET(req: Request) {
 
   const demo = asTheme(url.searchParams.get("demo"));
   if (demo) {
-    input = { theme: demo, honoree: demoEvent(demo).honoree, forName: null, lang };
+    // muestra: admite ?para=<nombre> para enseñar cómo llega el enlace personal
+    const forName = (url.searchParams.get("para") ?? "").replace(/\s+/g, " ").trim().slice(0, 60) || null;
+    input = { theme: demo, honoree: demoEvent(demo).honoree, forName, lang };
   } else {
     const slug = url.searchParams.get("e") ?? "";
     const token = url.searchParams.get("token") ?? "";
