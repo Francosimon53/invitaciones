@@ -1,0 +1,5 @@
+/* Las mismas familias que el diseño original (Google Fonts), servidas por next/font para que no dependan de la red del invitado. */
+:root {
+  --serif: var(--font-cormorant), "Cormorant Garamond", Georgia, serif;
+  --sans: var(--font-manrope), "Manrope", Arial, sans-serif;
+}

@@ -1,0 +1,7 @@
+import "../panel.css";
+import "../pedido/pedido.css";
+import "./admin.css";
+
+export default function AdminLayout({ children }: { children: React.ReactNode }) {
+  return <div className="admin-body">{children}</div>;
+}

@@ -1,0 +1,18 @@
+/* Añadidos de la plataforma a la invitación (el resto del diseño vive en public/themes/<estilo>.css). */
+.preview-ribbon {
+  position: fixed;
+  z-index: 60;
+  left: 50%;
+  bottom: 14px;
+  transform: translateX(-50%);
+  margin: 0;
+  padding: 8px 16px;
+  border-radius: 999px;
+  background: rgba(0, 0, 0, 0.62);
+  border: 1px solid rgba(255, 255, 255, 0.28);
+  color: #fff;
+  font: 600 11px/1.4 var(--sans);
+  letter-spacing: 0.08em;
+  white-space: nowrap;
+  pointer-events: none;
+}

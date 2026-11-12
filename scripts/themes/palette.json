@@ -1,0 +1,35 @@
+{
+  "lila": {
+    "ogBackground": "#1d102c",
+    "ogLabel": "#d0c7e3",
+    "ogName": "#f6f3fb",
+    "ogNote": "#e4ddf4",
+    "themeColor": "#1f122e",
+    "snowStroke": "59,41,81",
+    "snowFill": "252,251,255",
+    "sparkA": "214,196,250",
+    "sparkB": "246,243,254"
+  },
+  "rosa": {
+    "ogBackground": "#2b0d1c",
+    "ogLabel": "#f0bcc6",
+    "ogName": "#ffebed",
+    "ogNote": "#ffd3db",
+    "themeColor": "#2d0f1d",
+    "snowStroke": "79,36,56",
+    "snowFill": "255,246,247",
+    "sparkA": "255,181,202",
+    "sparkB": "255,234,237"
+  },
+  "esmeralda": {
+    "ogBackground": "#001c11",
+    "ogLabel": "#d2d096",
+    "ogName": "#fff5be",
+    "ogNote": "#ebe4a9",
+    "themeColor": "#001e13",
+    "snowStroke": "0,59,42",
+    "snowFill": "255,252,215",
+    "sparkA": "201,215,147",
+    "sparkB": "255,245,190"
+  }
+}
