@@ -123,6 +123,7 @@
 .admin input,
 .admin textarea,
 .gate input {
+  box-sizing: border-box;
   width: 100%;
   background: rgba(4, 10, 25, 0.55);
   border: 1px solid var(--line);

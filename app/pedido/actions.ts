@@ -7,6 +7,8 @@ import { PHRASES, stateByCode } from "@/lib/places";
 import type { OrderData } from "@/lib/types";
 import { notifyNewOrder } from "@/lib/notify";
 import { siteUrl } from "@/lib/site-url";
+import { asLang } from "@/lib/i18n";
+import { ORDER_TEXT } from "@/lib/order-i18n";
 
 export type OrderState =
   | { status: "idle" }
@@ -34,6 +36,8 @@ export async function submitOrderAction(_prev: OrderState, fd: FormData): Promis
   // trampa para bots: un campo oculto que una persona nunca llena
   if (text(fd, "sitio_web", 50)) return { status: "ok", code: "------", name: "" };
 
+  const lang = asLang(text(fd, "idioma", 2)) ?? "es";
+  const t = ORDER_TEXT[lang];
   const etsy = text(fd, "etsy", 30).replace(/\D/g, "");
   const estilo = asTheme(text(fd, "estilo", 20));
   const frase = text(fd, "frase", 20);
@@ -57,6 +61,7 @@ export async function submitOrderAction(_prev: OrderState, fd: FormData): Promis
     historia: longText(fd, "historia", 600),
     firma: fd.get("firma") === "si",
     notas: longText(fd, "notas", 800),
+    idioma: lang,
   };
 
   const missing: string[] = [];
@@ -73,10 +78,10 @@ export async function submitOrderAction(_prev: OrderState, fd: FormData): Promis
   if (data.confirmar_antes && !DATE.test(data.confirmar_antes)) missing.push("confirmar_antes");
   if (!data.contacto.nombre) missing.push("contacto_nombre");
   if (missing.length) {
-    return { status: "error", message: "Revisa los campos marcados: faltan datos o no tienen el formato correcto.", fields: missing };
+    return { status: "error", message: t.errFields, fields: missing };
   }
   if (DATE.test(data.fecha) && Date.parse(`${data.fecha}T23:59:59Z`) < Date.now()) {
-    return { status: "error", message: "La fecha de la fiesta ya pasó. Revísala, por favor.", fields: ["fecha"] };
+    return { status: "error", message: t.errPast, fields: ["fecha"] };
   }
 
   try {
@@ -86,8 +91,8 @@ export async function submitOrderAction(_prev: OrderState, fd: FormData): Promis
     return { status: "ok", code, name: data.quinceanera };
   } catch (e) {
     const msg = e instanceof Error ? e.message : "";
-    if (msg.includes("busy")) return { status: "error", message: "Estamos recibiendo muchos pedidos. Inténtalo de nuevo en unos minutos." };
+    if (msg.includes("busy")) return { status: "error", message: t.errBusy };
     console.error("inv_submit_order", msg);
-    return { status: "error", message: "No se pudo enviar. Revisa tu conexión e inténtalo de nuevo." };
+    return { status: "error", message: t.errNetwork };
   }
 }

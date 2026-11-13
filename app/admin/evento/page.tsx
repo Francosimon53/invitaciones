@@ -85,6 +85,10 @@ function fromOrder(o: OrderRow): EventFormValues {
   const st = stateByCode(d.estado ?? "");
   const preset = PHRASES.find((p) => p.es === d.frase);
   const isDefaultPhrase = preset?.id === "sonar";
+  // pedido llenado en inglés: sus textos propios van al lado en inglés y Simón traduce al español
+  const en = d.idioma === "en";
+  const own = (text: string) => (en ? { es: "", en: text } : { es: text, en: "" });
+  const poem = isDefaultPhrase ? { es: "", en: "" } : preset ? { es: preset.es, en: preset.en } : own(d.frase);
   return {
     ...EMPTY,
     order_id: o.id,
@@ -101,10 +105,12 @@ function fromOrder(o: OrderRow): EventFormValues {
     city_label: st ? `${d.ciudad}, ${st.name}` : d.ciudad,
     phone: d.telefono_consultas,
     deadline: d.confirmar_antes,
-    attire_es: d.vestimenta,
-    poem_es: isDefaultPhrase ? "" : d.frase,
-    poem_en: isDefaultPhrase ? "" : (preset?.en ?? ""),
-    story_es: d.historia,
+    attire_es: own(d.vestimenta).es,
+    attire_en: own(d.vestimenta).en,
+    poem_es: poem.es,
+    poem_en: poem.en,
+    story_es: own(d.historia).es,
+    story_en: own(d.historia).en,
     credit: d.firma,
     host_name: d.contacto?.nombre ?? "",
     host_email: d.contacto?.email ?? "",
@@ -144,6 +150,7 @@ export default async function AdminEvent({ searchParams }: { searchParams: Searc
           <summary className="h3">
             Pedido {order.code} · Etsy #{order.etsy_order ?? "—"}
           </summary>
+          {order.data.idioma === "en" && <p>Pedido llenado en inglés: sus textos propios ya están en los campos en inglés; tradúcelos al español.</p>}
           {order.data.notas && <p>Notas: {order.data.notas}</p>}
           <pre className="muted small" style={{ whiteSpace: "pre-wrap", margin: 0 }}>
             {JSON.stringify(order.data, null, 2)}

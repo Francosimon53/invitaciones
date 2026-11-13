@@ -81,7 +81,10 @@ export default async function AdminHome({ searchParams }: { searchParams: Search
                     <tr key={o.id} className="order-row">
                       <td className="nowrap">
                         <b>{o.code}</b>
-                        <small className="muted">Etsy #{o.etsy_order ?? "—"}</small>
+                        <small className="muted">
+                          Etsy #{o.etsy_order ?? "—"}
+                          {o.data.idioma === "en" ? " · en inglés" : ""}
+                        </small>
                         <small className="muted">{fmt(o.created_at)}</small>
                       </td>
                       <td>

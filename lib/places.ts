@@ -58,6 +58,31 @@ export function stateByCode(code: string) {
   return STATES.find((s) => s.code === code.toUpperCase()) ?? null;
 }
 
+/** Nombre en inglés de los estados que en español se escriben distinto; los demás se llaman igual. */
+const STATE_NAMES_EN: Record<string, string> = {
+  DC: "Washington, D.C.",
+  HI: "Hawaii",
+  LA: "Louisiana",
+  MI: "Michigan",
+  MS: "Mississippi",
+  MO: "Missouri",
+  NH: "New Hampshire",
+  NJ: "New Jersey",
+  NM: "New Mexico",
+  NY: "New York",
+  NC: "North Carolina",
+  ND: "North Dakota",
+  OR: "Oregon",
+  PA: "Pennsylvania",
+  SC: "South Carolina",
+  SD: "South Dakota",
+  WV: "West Virginia",
+};
+
+export function stateName(state: { code: string; name: string }, lang: "es" | "en"): string {
+  return lang === "en" ? (STATE_NAMES_EN[state.code] ?? state.name) : state.name;
+}
+
 /** Frases listas para la portada de la invitación (español e inglés). */
 export const PHRASES: { id: string; es: string; en: string }[] = [
   { id: "sonar", es: "Una noche para soñar. Un recuerdo para siempre.", en: "A night to dream. A memory to keep forever." },

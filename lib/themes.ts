@@ -14,6 +14,9 @@ export interface Theme {
   label: string;
   /** Colores en palabras, para el pedido y las fichas. */
   colors: string;
+  /** Nombre y colores en inglés, para el pedido en inglés. */
+  labelEn: string;
+  colorsEn: string;
   title: Record<Lang, string>;
   header: Record<Lang, string>;
   envelopeAlt: Record<Lang, string>;
@@ -32,6 +35,8 @@ export const THEMES: Record<ThemeKey, Theme> = {
     key: "azul",
     label: "Noche invernal",
     colors: "Azul marino y plata",
+    labelEn: "Winter Night",
+    colorsEn: "Navy blue and silver",
     title: { es: "Una noche invernal", en: "A winter night" },
     header: { es: "UNA NOCHE INVERNAL", en: "A WINTER NIGHT" },
     envelopeAlt: {
@@ -55,6 +60,8 @@ export const THEMES: Record<ThemeKey, Theme> = {
     key: "lila",
     label: "Sueño lila",
     colors: "Lila y plata",
+    labelEn: "Lilac Dream",
+    colorsEn: "Lilac and silver",
     title: { es: "Un sueño lila", en: "A lilac dream" },
     header: { es: "UN SUEÑO LILA", en: "A LILAC DREAM" },
     envelopeAlt: {
@@ -78,6 +85,8 @@ export const THEMES: Record<ThemeKey, Theme> = {
     key: "rosa",
     label: "Noche encantada",
     colors: "Rosa y plata rosada",
+    labelEn: "Enchanted Night",
+    colorsEn: "Pink and rose silver",
     title: { es: "Una noche encantada", en: "An enchanted night" },
     header: { es: "NOCHE ENCANTADA", en: "ENCHANTED NIGHT" },
     envelopeAlt: {
@@ -101,6 +110,8 @@ export const THEMES: Record<ThemeKey, Theme> = {
     key: "esmeralda",
     label: "Noche esmeralda",
     colors: "Verde esmeralda y dorado",
+    labelEn: "Emerald Night",
+    colorsEn: "Emerald green and gold",
     title: { es: "Una noche esmeralda", en: "An emerald night" },
     header: { es: "NOCHE ESMERALDA", en: "EMERALD NIGHT" },
     envelopeAlt: {

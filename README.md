@@ -19,14 +19,14 @@ la mamá. Se vende en Etsy: la compradora llena un formulario, Simón revisa y p
 | Clienta (mamá) | Confirmaciones | `/<evento>/panel?key=<clave>` |
 | Clienta (mamá) | Invitados, enlaces y WhatsApp | `/<evento>/panel/invitados?key=<clave>` |
 | Clienta (mamá) | Vista previa de un borrador | `/<evento>?vista=<clave>` |
-| Compradora de Etsy | Formulario de datos | `/pedido` (o `/pedido?estilo=lila`) |
+| Compradora de Etsy | Formulario de datos en español o inglés | `/pedido` (o `/pedido?estilo=lila&idioma=en`) |
 | Simón | Pedidos e invitaciones | `/admin?key=<clave de Simón>` |
 | Etsy / fotos | Muestras (no guardan respuestas) | `/demo/azul`, `/demo/lila`, `/demo/rosa`, `/demo/esmeralda` |
 | WhatsApp | Portadas | estáticas en Storage (`inv-covers`); si faltan, `/api/cover` |
 
 ## Flujo de un pedido
 
-1. Llega la venta en Etsy. El PDF que descarga la compradora la manda a `/pedido`.
+1. Llega la venta en Etsy. El PDF que descarga la compradora la manda a `/pedido` con su estilo y su idioma (`?idioma=es` o `?idioma=en`; sin el parámetro toma el idioma del teléfono). Arriba del formulario puede cambiar de idioma. Si lo llenó en inglés, el pedido lo dice en `/admin` y sus textos propios llegan a los campos en inglés para traducirlos al español.
 2. El pedido aparece en `/admin` (y por Telegram si están `TELEGRAM_BOT_TOKEN` y `TELEGRAM_CHAT_ID`).
 3. «Crear invitación»: el formulario sale precargado. Revisar, traducir al inglés lo que la clienta escribió
    (frase, palabras, vestimenta) y «Guardar borrador».

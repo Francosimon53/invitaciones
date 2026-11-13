@@ -103,6 +103,8 @@ export interface OrderData {
   historia: string;
   firma: boolean;
   notas: string;
+  /** Idioma en que la compradora llenó el pedido (los pedidos viejos no lo traen: español). */
+  idioma?: "es" | "en";
 }
 
 export interface OrderRow {
