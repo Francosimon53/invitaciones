@@ -55,7 +55,7 @@ export const ORDER_TEXT = {
     doneTitle: (name: string) => (name ? `Gracias, la invitación de ${name} ya está en camino` : "Gracias"),
     doneCode: "Tu código de pedido es",
     doneNext:
-      "Te escribiremos por los mensajes de Etsy cuando esté lista para que la revises, normalmente en 1 a 2 días. Si quieres cambiar algo, contéstanos por ahí mismo con tu código.",
+      "En 1 a 2 días te mandamos por los mensajes de Etsy tu invitación lista y tu panel para los invitados. Si después quieres cambiar algo, contéstanos por ahí mismo con tu código y lo corregimos; el enlace no cambia.",
     errFields: "Revisa los campos marcados: faltan datos o no tienen el formato correcto.",
     errPast: "La fecha de la fiesta ya pasó. Revísala, por favor.",
     errBusy: "Estamos recibiendo muchos pedidos. Inténtalo de nuevo en unos minutos.",
@@ -114,7 +114,7 @@ export const ORDER_TEXT = {
     doneTitle: (name: string) => (name ? `Thank you, ${name}’s invitation is on its way` : "Thank you"),
     doneCode: "Your order code is",
     doneNext:
-      "We will message you on Etsy when it is ready for you to review, usually within 1 to 2 days. If you want to change anything, reply there with your code.",
+      "Within 1 to 2 days we message you on Etsy with your finished invitation and your guest panel. If you want to change anything later, reply there with your code and we fix it; the link stays the same.",
     errFields: "Check the highlighted fields: some details are missing or in the wrong format.",
     errPast: "The party date has already passed. Please check it.",
     errBusy: "We are receiving many orders right now. Please try again in a few minutes.",

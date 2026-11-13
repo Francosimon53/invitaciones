@@ -27,12 +27,15 @@ la mamá. Se vende en Etsy: la compradora llena un formulario, Simón revisa y p
 ## Flujo de un pedido
 
 1. Llega la venta en Etsy. El PDF que descarga la compradora la manda a `/pedido` con su estilo y su idioma (`?idioma=es` o `?idioma=en`; sin el parámetro toma el idioma del teléfono). Arriba del formulario puede cambiar de idioma. Si lo llenó en inglés, el pedido lo dice en `/admin` y sus textos propios llegan a los campos en inglés para traducirlos al español.
-2. El pedido aparece en `/admin` (y por Telegram si están `TELEGRAM_BOT_TOKEN` y `TELEGRAM_CHAT_ID`).
-3. «Crear invitación»: el formulario sale precargado. Revisar, traducir al inglés lo que la clienta escribió
-   (frase, palabras, vestimenta) y «Guardar borrador».
-4. Copiar el «mensaje de revisión» y pegarlo en Etsy. Cuando la clienta aprueba, «Publicar» y pegar el «mensaje de entrega».
+2. El pedido aparece en `/admin` y llega un aviso por Telegram. En producción el aviso sale del bot de Manon, con
+   `TELEGRAM_BOT_TOKEN` y `TELEGRAM_CHAT_ID` en Vercel.
+3. «Crear invitación»: el formulario sale precargado. Revisar, traducir al otro idioma lo que la clienta escribió
+   (frase, palabras, vestimenta) y «Publicar» directo: no hay vista previa para aprobar.
    Al publicar se generan las portadas del enlace general y el pedido pasa a «entregado».
-5. La clienta pega su lista en su panel: cada invitado recibe su enlace con su nombre y su portada.
+4. Copiar el «mensaje de entrega» y pegarlo en la conversación del pedido en Etsy. Si después la clienta pide un cambio,
+   se corrige en el mismo formulario y el enlace no cambia. El «mensaje de revisión» queda para casos especiales.
+5. La clienta pega su lista en su panel: cada invitado recibe su enlace con su nombre y su portada. Ella ve la
+   invitación antes que nadie, porque los invitados solo la reciben cuando ella manda los enlaces.
 
 ## Idioma
 
