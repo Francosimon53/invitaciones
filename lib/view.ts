@@ -12,6 +12,8 @@ export interface InvitationView {
   base: string;
   slug: string;
   theme: ThemeKey;
+  /** Estilo de día: textos oscuros sobre fondo claro y adornos de flor. */
+  day: boolean;
   /** Muestra o vista previa: la confirmación se simula y no se guarda. */
   mode: "live" | "demo" | "preview";
   monogram: string;
@@ -53,6 +55,7 @@ export function buildView(ev: EventData, mode: InvitationView["mode"], base: str
     base,
     slug: ev.slug,
     theme: ev.theme,
+    day: t.mode === "day",
     mode,
     monogram: ev.monogram,
     honoree: ev.honoree,

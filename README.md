@@ -1,6 +1,6 @@
 # Sobre Mágico · Invitaciones digitales de XV años
 
-El diseño de «Noche invernal» convertido en plataforma: una invitación por quinceañera, en cuatro estilos de color, con
+El diseño de «Noche invernal» convertido en plataforma: una invitación por quinceañera, en 19 estilos (4 de invierno, 7 de noche y 8 de día), con
 sobre que se abre, música, confirmación de asistencia, enlace personal por invitado con portada para WhatsApp y panel para
 la mamá. Se vende en Etsy: la compradora llena un formulario, Simón revisa y publica, y la clienta maneja su lista sola.
 
@@ -21,7 +21,7 @@ la mamá. Se vende en Etsy: la compradora llena un formulario, Simón revisa y p
 | Clienta (mamá) | Vista previa de un borrador | `/<evento>?vista=<clave>` |
 | Compradora de Etsy | Formulario de datos en español o inglés | `/pedido` (o `/pedido?estilo=lila&idioma=en`) |
 | Simón | Pedidos e invitaciones | `/admin?key=<clave de Simón>` |
-| Etsy / fotos | Muestras (no guardan respuestas) | `/demo/azul`, `/demo/lila`, `/demo/rosa`, `/demo/esmeralda` |
+| Etsy / fotos | Muestras (no guardan respuestas) | `/demo/<estilo>`: una por cada estilo de `lib/themes.ts` (`/demo/azul`, `/demo/aurora`, `/demo/cerezos`…) |
 | WhatsApp | Portadas | estáticas en Storage (`inv-covers`); si faltan, `/api/cover` |
 
 ## Flujo de un pedido
@@ -44,10 +44,28 @@ eligió en el selector ES/EN → idioma del teléfono → idioma de la lista (en
 
 ## Estilos
 
-`scripts/themes/recolor.py` recolorea en OKLCH el diseño base (imágenes y CSS) y genera `public/themes/<estilo>.css` y
-`public/themes/<estilo>/`. Solo mueve los tonos fríos del original; las luces cálidas y la nieve se conservan.
-Para agregar un estilo: definir sus parámetros en `THEMES` del script, correr `npm run themes`, agregarlo a `lib/themes.ts`
-(textos y colores de `scripts/themes/palette.json`) y a la restricción `theme in (...)` de `inv_events`.
+Hay 19 estilos en tres familias (`lib/themes.ts`). Por dentro todos son la misma invitación; solo cambia el aspecto.
+
+| Familia | Estilos | Fondo | Movimiento |
+| --- | --- | --- | --- |
+| Invierno | `azul`, `lila`, `rosa`, `esmeralda` | el castillo nevado, recoloreado | nieve |
+| De noche | `petalos`, `rosas`, `aurora`, `luciernagas`, `mariposas`, `linternas`, `oro` | el castillo nevado, recoloreado | pétalos, auroras, luciérnagas, mariposas, linternas, polvo de oro |
+| De día | `rosapalo`, `cerezos`, `lavanda`, `azulcielo`, `salvia`, `atardecer`, `tulipanes`, `buganvilias` | un castillo de primavera propio (`scripts/themes/dia/<estilo>.webp`) | pétalos, mariposas, palomas, destellos y rayos de sol |
+
+- `scripts/themes/recolor.py` genera `public/themes/<estilo>.css` y `public/themes/<estilo>/` (castillo, sobre, portada de
+  WhatsApp e ícono) y actualiza `scripts/themes/palette.json`. `npm run themes` los rehace todos;
+  `python3 scripts/themes/recolor.py rosas lavanda` rehace solo esos.
+- Invierno y noche: se recolorea en OKLCH el diseño base. Solo se mueven los tonos fríos; las luces cálidas y la nieve se conservan.
+- De día: el sobre pasa a papel claro con filigrana dorada o plateada, y el CSS sale del mismo original con la luminosidad
+  invertida (fondo claro, textos oscuros) más un bloque corto de ajustes (`day_extra`). Las tintas de cada estilo están
+  medidas contra su cielo: 4.5:1 como mínimo, 3:1 en los textos grandes.
+- El movimiento de cada estilo está en `lib/effects.ts` y lo dibuja `components/magic-scene.ts` sobre el mismo lienzo de
+  los fuegos artificiales. El botón del encabezado lo pausa y su etiqueta nombra lo que se mueve («Pausar pétalos»).
+  Lo que vive en el cielo (estrellas, aurora, rayos, palomas) se apaga al bajar por la invitación.
+
+Para agregar un estilo: definir sus parámetros en `THEMES` o `DAY_THEMES` del script (y, si es de día, poner su castillo
+en `scripts/themes/dia/`), correr el script, agregarlo a `lib/themes.ts` (grupo y textos), darle movimiento en
+`lib/effects.ts` y sumarlo a la restricción `theme in (...)` de `inv_events` con una migración nueva.
 
 ## Música
 

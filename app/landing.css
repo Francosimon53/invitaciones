@@ -78,3 +78,14 @@
 .foot a {
   color: var(--ice);
 }
+
+/* Los estilos van en grupos: invierno, de noche y de día. */
+.landing-group-title {
+  margin: 30px 0 12px;
+  font-size: 13px;
+  font-weight: 700;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  text-align: center;
+  opacity: 0.8;
+}

@@ -1,4 +1,4 @@
-import { THEMES, THEME_KEYS, themeAsset } from "@/lib/themes";
+import { THEMES, THEME_GROUPS, themeAsset } from "@/lib/themes";
 import { BRAND, SHOP_URL } from "@/lib/site";
 import "./panel.css";
 import "./landing.css";
@@ -20,16 +20,21 @@ export default function Home() {
           <li>Bilingüe: español e inglés</li>
           <li>Cuenta regresiva, mapa y «añadir al calendario»</li>
         </ul>
-        <div className="landing-cards">
-          {THEME_KEYS.map((k) => (
-            <a key={k} className="landing-card" href={`/demo/${k}`}>
-              {/* eslint-disable-next-line @next/next/no-img-element */}
-              <img src={themeAsset(k, "sobre.webp")} alt={THEMES[k].envelopeAlt.es} />
-              <span className="theme-name">{THEMES[k].label}</span>
-              <span className="muted small">{THEMES[k].colors} · ver muestra</span>
-            </a>
-          ))}
-        </div>
+        {THEME_GROUPS.map((g) => (
+          <div key={g.key} className="landing-group">
+            <h2 className="landing-group-title">{g.label.es}</h2>
+            <div className="landing-cards">
+              {g.themes.map((k) => (
+                <a key={k} className="landing-card" href={`/demo/${k}`}>
+                  {/* eslint-disable-next-line @next/next/no-img-element */}
+                  <img src={themeAsset(k, "sobre.webp")} alt={THEMES[k].envelopeAlt.es} loading="lazy" />
+                  <span className="theme-name">{THEMES[k].label}</span>
+                  <span className="muted small">{THEMES[k].colors} · ver muestra</span>
+                </a>
+              ))}
+            </div>
+          </div>
+        ))}
         {SHOP_URL && (
           <div className="actions center-actions">
             <a className="btn primary" href={SHOP_URL} target="_blank" rel="noopener noreferrer">

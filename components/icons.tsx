@@ -130,3 +130,21 @@ export function Crystal({ className = "" }: { className?: string }) {
     </svg>
   );
 }
+
+/** Flor decorativa de los estilos de día: ocupa el lugar del cristal de nieve, con el mismo trazo. */
+export function Blossom({ className = "" }: { className?: string }) {
+  return (
+    <svg className={className} viewBox="0 0 100 100" fill="none" aria-hidden="true">
+      <g stroke="currentColor" strokeWidth="1.2" strokeLinecap="round" strokeLinejoin="round">
+        {Array.from({ length: 8 }, (_, i) => (
+          <g key={i} transform={`rotate(${i * 45} 50 50)`}>
+            <path d="M50 42C43 32 43 18 50 8C57 18 57 32 50 42Z" fill="currentColor" fillOpacity={i % 2 ? 0.08 : 0.2} />
+            <path d="M50 38V20" />
+          </g>
+        ))}
+      </g>
+      <circle cx="50" cy="50" r="7.5" fill="currentColor" fillOpacity=".25" stroke="currentColor" />
+      <circle cx="50" cy="50" r="3" fill="currentColor" />
+    </svg>
+  );
+}

@@ -14,3 +14,4 @@ next-env.d.ts
 # sistema
 .DS_Store
 npm-debug.log*
+__pycache__/

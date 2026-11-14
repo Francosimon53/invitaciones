@@ -2,7 +2,7 @@
 
 import { useActionState } from "react";
 import { saveEventAction, type SaveEventState } from "@/app/admin/actions";
-import { THEMES, THEME_KEYS } from "@/lib/themes";
+import { THEMES, THEME_GROUPS } from "@/lib/themes";
 import { TIME_ZONES } from "@/lib/event";
 import { CopyButton } from "./CopyButton";
 
@@ -85,10 +85,14 @@ export function EventForm({ adminKey, v }: { adminKey: string; v: EventFormValue
           <label className="field">
             <span>Estilo</span>
             <select name="theme" defaultValue={v.theme || "azul"}>
-              {THEME_KEYS.map((k) => (
-                <option key={k} value={k}>
-                  {THEMES[k].label} · {THEMES[k].colors}
-                </option>
+              {THEME_GROUPS.map((g) => (
+                <optgroup key={g.key} label={g.label.es}>
+                  {g.themes.map((k) => (
+                    <option key={k} value={k}>
+                      {THEMES[k].label} · {THEMES[k].colors}
+                    </option>
+                  ))}
+                </optgroup>
               ))}
             </select>
           </label>

@@ -1,10 +1,15 @@
 "use client";
 
 import { useEffect, useRef } from "react";
+import type { EffectConfig } from "@/lib/effects";
+import { startScene } from "./magic-scene";
 
 interface Props {
   active: boolean;
+  /** Movimiento encendido (el botón del encabezado lo pausa). */
   snow: boolean;
+  /** Movimiento propio del estilo; null = la nieve del diseño original. */
+  effects: EffectConfig | null;
   /** Marca de tiempo (cambia para disparar fuegos artificiales). 0 = sin celebración. */
   celebration: number;
   reducedMotion: boolean;
@@ -31,8 +36,8 @@ interface Spark {
   color: string;
 }
 
-/** Nieve y fuegos artificiales del diseño original, con los colores de cada estilo. */
-export function MagicCanvas({ active, snow, celebration, reducedMotion, palette }: Props) {
+/** Nieve (o el movimiento del estilo) y fuegos artificiales, con los colores de cada estilo. */
+export function MagicCanvas({ active, snow, effects, celebration, reducedMotion, palette }: Props) {
   const ref = useRef<HTMLCanvasElement>(null);
   const celebrationStart = useRef(0);
 
@@ -52,6 +57,8 @@ export function MagicCanvas({ active, snow, celebration, reducedMotion, palette 
     const flakes: Flake[] = [];
     const sparks: Spark[] = [];
     const fired = new Set<number>();
+    const scene = effects && snow ? startScene(ctx, effects, reducedMotion) : null;
+    const snowing = snow && !effects;
 
     const resize = () => {
       w = window.innerWidth;
@@ -61,8 +68,9 @@ export function MagicCanvas({ active, snow, celebration, reducedMotion, palette 
       canvas.height = h * dpr;
       ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
       ctx.lineCap = "round";
+      scene?.resize(w, h);
       flakes.length = 0;
-      const n = reducedMotion ? 35 : w < 700 ? 100 : 160;
+      const n = !snowing ? 0 : reducedMotion ? 35 : w < 700 ? 100 : 160;
       for (let i = 0; i < n; i++) {
         flakes.push({
           x: Math.random() * w,
@@ -88,6 +96,7 @@ export function MagicCanvas({ active, snow, celebration, reducedMotion, palette 
       const dt = Math.min((now - last) / 16.667, 2);
       last = now;
       ctx.clearRect(0, 0, w, h);
+      scene?.frame(now);
       const since = now - celebrationStart.current;
       const celebrating = !reducedMotion && celebrationStart.current !== 0 && since < 7200;
       if (celebrating) {
@@ -98,7 +107,7 @@ export function MagicCanvas({ active, snow, celebration, reducedMotion, palette 
           }
         });
       }
-      if (snow) {
+      if (snowing) {
         for (const f of flakes) {
           f.y += f.speed * dt * (reducedMotion ? 0.3 : 1);
           f.x += Math.sin(now * 4e-4 + f.drift) * 0.34 * dt;
@@ -157,7 +166,7 @@ export function MagicCanvas({ active, snow, celebration, reducedMotion, palette 
       window.removeEventListener("resize", resize);
       ctx.clearRect(0, 0, w, h);
     };
-  }, [active, snow, celebration, reducedMotion, palette]);
+  }, [active, snow, effects, celebration, reducedMotion, palette]);
 
   return <canvas className="magic-canvas" ref={ref} aria-hidden="true" />;
 }

@@ -31,5 +31,170 @@
     "snowFill": "255,252,215",
     "sparkA": "201,215,147",
     "sparkB": "255,245,190"
+  },
+  "petalos": {
+    "ogBackground": "#301823",
+    "ogLabel": "#fab6c7",
+    "ogName": "#ffe5ef",
+    "ogNote": "#ffcddc",
+    "themeColor": "#331a25",
+    "snowStroke": "84,49,64",
+    "snowFill": "255,242,248",
+    "sparkA": "255,175,202",
+    "sparkB": "255,228,239"
+  },
+  "rosas": {
+    "ogBackground": "#29050b",
+    "ogLabel": "#f3c099",
+    "ogName": "#ffeec6",
+    "ogNote": "#ffd7ae",
+    "themeColor": "#2b060d",
+    "snowStroke": "79,25,34",
+    "snowFill": "255,248,221",
+    "sparkA": "255,188,146",
+    "sparkB": "255,237,197"
+  },
+  "aurora": {
+    "ogBackground": "#001824",
+    "ogLabel": "#a2d9d0",
+    "ogName": "#ddfef2",
+    "ogNote": "#bceee3",
+    "themeColor": "#001a26",
+    "snowStroke": "0,53,71",
+    "snowFill": "236,255,250",
+    "sparkA": "137,225,218",
+    "sparkB": "218,254,243"
+  },
+  "luciernagas": {
+    "ogBackground": "#161c12",
+    "ogLabel": "#dacc96",
+    "ogName": "#fff5c4",
+    "ogNote": "#f0e2ab",
+    "themeColor": "#181e13",
+    "snowStroke": "48,57,41",
+    "snowFill": "255,252,219",
+    "sparkA": "221,208,140",
+    "sparkB": "255,245,195"
+  },
+  "mariposas": {
+    "ogBackground": "#273441",
+    "ogLabel": "#c1cddc",
+    "ogName": "#f2f5f9",
+    "ogNote": "#d9e3ee",
+    "themeColor": "#293643",
+    "snowStroke": "63,82,100",
+    "snowFill": "250,252,254",
+    "sparkA": "186,209,236",
+    "sparkB": "240,245,251"
+  },
+  "linternas": {
+    "ogBackground": "#1c0e28",
+    "ogLabel": "#f4c18b",
+    "ogName": "#ffedbe",
+    "ogNote": "#ffd7a1",
+    "themeColor": "#1d102a",
+    "snowStroke": "57,38,76",
+    "snowFill": "255,247,215",
+    "sparkA": "255,192,124",
+    "sparkB": "255,236,187"
+  },
+  "oro": {
+    "ogBackground": "#0f0c09",
+    "ogLabel": "#e8c883",
+    "ogName": "#fff1ad",
+    "ogNote": "#ffdd96",
+    "themeColor": "#110e0b",
+    "snowStroke": "42,38,33",
+    "snowFill": "255,250,204",
+    "sparkA": "237,202,126",
+    "sparkB": "255,241,172"
+  },
+  "rosapalo": {
+    "ogBackground": "#feecf2",
+    "ogLabel": "#652948",
+    "ogName": "#5a2340",
+    "ogNote": "#652948",
+    "themeColor": "#aab6ea",
+    "snowStroke": "101,41,72",
+    "snowFill": "255,255,255",
+    "sparkA": "140,53,87",
+    "sparkB": "169,117,139"
+  },
+  "cerezos": {
+    "ogBackground": "#fdecf3",
+    "ogLabel": "#562947",
+    "ogName": "#4f2440",
+    "ogNote": "#562947",
+    "themeColor": "#85b3f8",
+    "snowStroke": "86,41,71",
+    "snowFill": "255,255,255",
+    "sparkA": "163,51,95",
+    "sparkB": "187,117,146"
+  },
+  "lavanda": {
+    "ogBackground": "#f3effe",
+    "ogLabel": "#463567",
+    "ogName": "#3b2a5a",
+    "ogNote": "#463567",
+    "themeColor": "#a6b6ea",
+    "snowStroke": "70,53,103",
+    "snowFill": "255,255,255",
+    "sparkA": "91,61,143",
+    "sparkB": "148,127,180"
+  },
+  "azulcielo": {
+    "ogBackground": "#e8f3ff",
+    "ogLabel": "#0b2a4f",
+    "ogName": "#1d3557",
+    "ogNote": "#0b2a4f",
+    "themeColor": "#62a4ee",
+    "snowStroke": "11,42,79",
+    "snowFill": "255,255,255",
+    "sparkA": "42,90,146",
+    "sparkB": "107,135,169"
+  },
+  "salvia": {
+    "ogBackground": "#e8f6eb",
+    "ogLabel": "#273d2f",
+    "ogName": "#26392d",
+    "ogNote": "#273d2f",
+    "themeColor": "#82b6e8",
+    "snowStroke": "39,61,47",
+    "snowFill": "255,255,255",
+    "sparkA": "64,98,78",
+    "sparkB": "120,148,133"
+  },
+  "atardecer": {
+    "ogBackground": "#fdeee4",
+    "ogLabel": "#45230c",
+    "ogName": "#4a2a18",
+    "ogNote": "#45230c",
+    "themeColor": "#989ed9",
+    "snowStroke": "69,35,12",
+    "snowFill": "255,255,255",
+    "sparkA": "143,90,34",
+    "sparkB": "165,126,89"
+  },
+  "tulipanes": {
+    "ogBackground": "#f6f1e2",
+    "ogLabel": "#3a2d00",
+    "ogName": "#3b300c",
+    "ogNote": "#3a2d00",
+    "themeColor": "#70a8ee",
+    "snowStroke": "58,45,0",
+    "snowFill": "255,255,255",
+    "sparkA": "107,79,8",
+    "sparkB": "149,131,93"
+  },
+  "buganvilias": {
+    "ogBackground": "#fdecf4",
+    "ogLabel": "#520536",
+    "ogName": "#4f0c35",
+    "ogNote": "#520536",
+    "themeColor": "#68a1e3",
+    "snowStroke": "82,5,54",
+    "snowFill": "255,255,255",
+    "sparkA": "176,24,108",
+    "sparkB": "177,93,139"
   }
 }

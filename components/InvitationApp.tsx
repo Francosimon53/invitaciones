@@ -5,10 +5,11 @@ import { saveRsvp } from "@/app/actions";
 import type { Reservation } from "@/lib/reservation";
 import { LANG_CHOICE_COOKIE, type Lang } from "@/lib/i18n";
 import type { InvitationView } from "@/lib/view";
+import { EFFECTS } from "@/lib/effects";
 import { MagicCanvas } from "./MagicCanvas";
 import { Countdown } from "./Countdown";
 import { CalendarOptions } from "./CalendarOptions";
-import { ArrowDown, CalendarDays, Check, ChevronDown, Crystal, MapPin, Music2, Pause, Phone, Play, SnowflakeIcon, Sparkles } from "./icons";
+import { ArrowDown, Blossom, CalendarDays, Check, ChevronDown, Crystal as SnowCrystal, MapPin, Music2, Pause, Phone, Play, SnowflakeIcon, Sparkles } from "./icons";
 import "./invitation-extra.css";
 
 export interface GuestInfo {
@@ -54,6 +55,11 @@ export function InvitationApp({ view, initialLang, family: initialFamily, guest,
   const cal = view.calendar[lang];
   const isOpen = stage !== "closed";
   const simulated = view.mode !== "live";
+  // movimiento propio del estilo; los de invierno no tienen entrada y conservan la nieve
+  const effects = (EFFECTS as Partial<Record<string, (typeof EFFECTS)[keyof typeof EFFECTS]>>)[view.theme] ?? null;
+  const MotionIcon = effects ? Sparkles : SnowflakeIcon;
+  // el adorno entre secciones: cristal de nieve de noche, flor en los estilos de día
+  const Crystal = view.day ? Blossom : SnowCrystal;
 
   useEffect(() => {
     document.documentElement.lang = lang;
@@ -201,7 +207,7 @@ export function InvitationApp({ view, initialLang, family: initialFamily, guest,
           setMusicPlaying(false);
         }}
       />
-      <MagicCanvas active snow={snow} celebration={celebration} reducedMotion={reducedMotion} palette={view.snow} />
+      <MagicCanvas active snow={snow} effects={effects} celebration={celebration} reducedMotion={reducedMotion} palette={view.snow} />
 
       {view.mode === "preview" && <p className="preview-ribbon">{s.previewBanner}</p>}
 
@@ -226,7 +232,7 @@ export function InvitationApp({ view, initialLang, family: initialFamily, guest,
             aria-pressed={snow}
             onClick={() => setSnow((v) => !v)}
           >
-            <SnowflakeIcon size={17} />
+            <MotionIcon size={17} />
           </button>
           {isOpen && (
             <button className="icon-button music-button" aria-label={musicPlaying ? s.musicPause : s.musicPlay} onClick={toggleMusic}>
@@ -292,7 +298,7 @@ export function InvitationApp({ view, initialLang, family: initialFamily, guest,
             </div>
           </div>
           <button type="button" className="open-hint envelope-open-cta" onClick={openEnvelope} disabled={stage !== "closed"}>
-            <SnowflakeIcon size={20} />
+            <MotionIcon size={20} />
             <span>{stage === "opening" ? s.opening : s.tapToOpen}</span>
             <ArrowDown size={18} />
           </button>

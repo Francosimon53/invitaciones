@@ -2,7 +2,7 @@
 
 import { useActionState, useState } from "react";
 import { submitOrderAction, type OrderState } from "@/app/pedido/actions";
-import { THEMES, THEME_KEYS, themeAsset } from "@/lib/themes";
+import { THEMES, THEME_GROUPS, themeAsset } from "@/lib/themes";
 import { PHRASES, STATES, stateName } from "@/lib/places";
 import { ORDER_TEXT } from "@/lib/order-i18n";
 import type { Lang } from "@/lib/i18n";
@@ -44,20 +44,25 @@ export function OrderForm({ initialStyle, lang }: { initialStyle: string; lang: 
       <section className="card order-section">
         <h2 className="h3">{t.s2}</h2>
         <p className="muted small">{t.s2Help}</p>
-        <div className={`theme-cards${bad("estilo")}`}>
-          {THEME_KEYS.map((k) => (
-            <label key={k} className="theme-card">
-              <input type="radio" name="estilo" value={k} defaultChecked={k === initialStyle} required />
-              {/* eslint-disable-next-line @next/next/no-img-element */}
-              <img src={themeAsset(k, "sobre.webp")} alt="" loading="lazy" />
-              <span className="theme-name">{lang === "en" ? THEMES[k].labelEn : THEMES[k].label}</span>
-              <span className="muted small">{lang === "en" ? THEMES[k].colorsEn : THEMES[k].colors}</span>
-              <a href={`/demo/${k}?idioma=${lang}`} target="_blank" rel="noopener noreferrer" className="small">
-                {t.sample}
-              </a>
-            </label>
-          ))}
-        </div>
+        {THEME_GROUPS.map((g) => (
+          <div key={g.key} className="theme-group">
+            <h3 className="theme-group-title">{g.label[lang]}</h3>
+            <div className={`theme-cards${bad("estilo")}`}>
+              {g.themes.map((k) => (
+                <label key={k} className="theme-card">
+                  <input type="radio" name="estilo" value={k} defaultChecked={k === initialStyle} required />
+                  {/* eslint-disable-next-line @next/next/no-img-element */}
+                  <img src={themeAsset(k, "sobre.webp")} alt="" loading="lazy" />
+                  <span className="theme-name">{lang === "en" ? THEMES[k].labelEn : THEMES[k].label}</span>
+                  <span className="muted small">{lang === "en" ? THEMES[k].colorsEn : THEMES[k].colors}</span>
+                  <a href={`/demo/${k}?idioma=${lang}`} target="_blank" rel="noopener noreferrer" className="small">
+                    {t.sample}
+                  </a>
+                </label>
+              ))}
+            </div>
+          </div>
+        ))}
       </section>
 
       <section className="card order-section">

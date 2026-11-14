@@ -96,7 +96,7 @@ export async function renderCover(c: CoverInput): Promise<ImageResponse> {
                 lineHeight: 1.08,
                 letterSpacing: 0.5,
                 whiteSpace: "nowrap",
-                textShadow: "0 1px 8px rgba(0,0,0,0.47)",
+                textShadow: t.og.shadow ?? "0 1px 8px rgba(0,0,0,0.47)",
               }}
             >
               {line}

@@ -150,8 +150,8 @@ export function buildStrings(lang: Lang, ev: EventData): Strings {
     return {
       monogramLabel: `${name}, quince años`,
       headerTitle: t.header.es,
-      snowOn: "Pausar nieve",
-      snowOff: "Activar nieve",
+      snowOn: `Pausar ${t.motion.es}`,
+      snowOff: `Activar ${t.motion.es}`,
       musicPause: "Pausar música",
       musicPlay: "Escuchar música",
       language: "Idioma",
@@ -255,8 +255,8 @@ export function buildStrings(lang: Lang, ev: EventData): Strings {
   return {
     monogramLabel: `${possessive(name)} fifteenth birthday`,
     headerTitle: t.header.en,
-    snowOn: "Pause snowfall",
-    snowOff: "Start snowfall",
+    snowOn: `Pause ${t.motion.en}`,
+    snowOff: `Start ${t.motion.en}`,
     musicPause: "Pause music",
     musicPlay: "Play music",
     language: "Language",
