@@ -170,6 +170,11 @@ export async function saveEvent(key: string, payload: EventPayload): Promise<Adm
   return rpc<AdminEventRow>("inv_save_event", { p_key: key, p_event: payload });
 }
 
+/** Cambia la clave del panel de la clienta: el enlace anterior deja de abrir. Devuelve el evento con la clave nueva. */
+export async function changeHostKey(key: string, id: string, hostKey: string): Promise<AdminEventRow> {
+  return rpc<AdminEventRow>("inv_change_host_key", { p_key: key, p_id: id, p_host_key: hostKey });
+}
+
 export async function setEventCovers(key: string, id: string, paths: Record<string, string>): Promise<void> {
   await rpc("inv_set_event_covers", { p_key: key, p_id: id, p_paths: paths });
 }

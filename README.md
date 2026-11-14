@@ -36,6 +36,9 @@ la mamá. Se vende en Etsy: la compradora llena un formulario, Simón revisa y p
    se corrige en el mismo formulario y el enlace no cambia. El «mensaje de revisión» queda para casos especiales.
 5. La clienta pega su lista en su panel: cada invitado recibe su enlace con su nombre y su portada. Ella ve la
    invitación antes que nadie, porque los invitados solo la reciben cuando ella manda los enlaces.
+6. Si la clienta comparte por error el enlace de su panel: en `/admin`, «Cambiar clave del panel» en la fila de su
+   invitación (pide un segundo toque). El enlace anterior deja de abrir (también la vista previa `?vista=`) y arriba sale el
+   nuevo con el aviso para Etsy en español y en inglés. Invitados, enlaces personales y respuestas no cambian.
 
 ## Idioma
 
@@ -81,7 +84,7 @@ Ver `.env.example`.
 ## Base de datos
 
 Migraciones en `supabase/migrations/`. Claves: la de Simón en `private.settings` (`inv_admin_key`); la de cada clienta en
-`private.inv_event_keys`, generada al crear el evento. Una respuesta por persona, con las mismas reglas que la invitación de
+`private.inv_event_keys`, generada al crear el evento y cambiable desde `/admin` (`inv_change_host_key`, migración `0005`). Una respuesta por persona, con las mismas reglas que la invitación de
 Stephanie; si alguien confirmó por el enlace general y después se agrega a la lista con el mismo nombre, su respuesta pasa a
 ser la de ese invitado.
 

@@ -1,7 +1,8 @@
 "use server";
 
 import { revalidatePath } from "next/cache";
-import { checkAdminKey, saveEvent, setOrderStatus, toEventData, type EventPayload } from "@/lib/db";
+import { redirect } from "next/navigation";
+import { changeHostKey, checkAdminKey, isUuid, saveEvent, setOrderStatus, toEventData, type EventPayload } from "@/lib/db";
 import { zonedToUtcMs } from "@/lib/event";
 import { newToken } from "@/lib/invite";
 import { asTheme } from "@/lib/themes";
@@ -158,4 +159,24 @@ export async function setOrderStatusAction(fd: FormData): Promise<void> {
   if (!["nuevo", "en_proceso", "entregado", "cancelado"].includes(status)) return;
   await setOrderStatus(key, id, status as "nuevo");
   revalidatePath("/admin");
+}
+
+/** Cambia la clave del panel de una clienta: su enlace anterior deja de abrir y /admin muestra el nuevo para mandárselo. */
+export async function changeHostKeyAction(fd: FormData): Promise<void> {
+  const key = t(fd, "key");
+  const id = t(fd, "id");
+  if (!(await checkAdminKey(key)) || !isUuid(id)) return;
+  let ok = false;
+  for (let attempt = 0; attempt < 2; attempt++) {
+    try {
+      await changeHostKey(key, id, newToken(16));
+      ok = true;
+      break;
+    } catch (e) {
+      // solo se reintenta si la clave nueva coincidió con la de otro evento (casi imposible)
+      if (!/duplicate key|unique/i.test(e instanceof Error ? e.message : "")) break;
+    }
+  }
+  revalidatePath("/admin");
+  redirect(`/admin?key=${encodeURIComponent(key)}&${ok ? "clave_nueva" : "clave_error"}=${id}`);
 }

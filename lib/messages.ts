@@ -39,6 +39,24 @@ export function reviewMessage(a: Args, lang: MessageLang = "es"): string {
   );
 }
 
+/** Aviso a la clienta cuando Simón le cambia la clave del panel: el enlace anterior ya no abre. */
+export function newPanelMessage(a: Args, lang: MessageLang = "es"): string {
+  const hi = greeting(a.hostName, lang);
+  const panel = panelLink(a.siteUrl, a.slug, a.hostKey);
+  if (lang === "en") {
+    return (
+      `${hi} For your security, I changed the link to your panel for ${possessive(a.honoree)} invitation 🔒\n\n` +
+      `Your new panel (just for you, please do not share it):\n${panel}\n\n` +
+      `The previous link no longer works. Your guest list, the links you already sent and the replies stay the same.`
+    );
+  }
+  return (
+    `${hi} Por seguridad cambié el enlace de tu panel de la invitación de ${a.honoree} 🔒\n\n` +
+    `Tu panel nuevo (solo para ti, no lo compartas):\n${panel}\n\n` +
+    `El enlace anterior ya no abre. Tu lista de invitados, los enlaces que ya mandaste y las respuestas siguen igual.`
+  );
+}
+
 export function deliveryMessage(a: Args, lang: MessageLang = "es"): string {
   const hi = greeting(a.hostName, lang);
   const invitation = eventLink(a.siteUrl, a.slug);

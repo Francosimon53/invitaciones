@@ -37,3 +37,11 @@
 .saved .guest-link {
   margin: 0;
 }
+.saved .guest-link a {
+  word-break: break-all;
+}
+.links .confirm-form {
+  display: flex;
+  flex-wrap: wrap;
+  margin-top: 8px;
+}

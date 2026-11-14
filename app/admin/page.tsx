@@ -5,7 +5,10 @@ import { first, type SearchParams } from "@/lib/page-helpers";
 import { THEMES, asTheme } from "@/lib/themes";
 import { longDate } from "@/lib/event";
 import { BRAND } from "@/lib/site";
-import { setOrderStatusAction } from "./actions";
+import { panelChangeFor } from "@/lib/admin-links";
+import { ConfirmSubmit } from "@/components/ConfirmSubmit";
+import { CopyButton } from "@/components/CopyButton";
+import { changeHostKeyAction, setOrderStatusAction } from "./actions";
 
 export const dynamic = "force-dynamic";
 export const metadata: Metadata = { title: `Pedidos · ${BRAND}`, robots: { index: false, follow: false } };
@@ -24,11 +27,42 @@ export default async function AdminHome({ searchParams }: { searchParams: Search
   const k = encodeURIComponent(key);
   const fresh = orders.filter((o) => o.status === "nuevo").length;
   const fmt = (iso: string) => new Date(iso).toLocaleString("es-US", { timeZone: "America/New_York", dateStyle: "medium", timeStyle: "short" });
+  // después de «Cambiar clave del panel»: el enlace nuevo y el aviso para la clienta
+  const changedId = first(sp.clave_nueva);
+  const changed = changedId ? (events.find((e) => e.id === changedId) ?? null) : null;
+  const change = changed ? await panelChangeFor(changed) : null;
+  const changeFailed = Boolean(first(sp.clave_error));
 
   return (
     <main className="admin">
       <p className="kicker">{BRAND}</p>
       <h1>Pedidos e invitaciones</h1>
+
+      {changed && change && (
+        <section className="card order-section saved" role="status">
+          <p className="kicker">Clave del panel cambiada</p>
+          <p>
+            El enlace anterior del panel de {changed.honoree} ya no abre. Mándale a la clienta el nuevo por Etsy; sus invitados,
+            enlaces y respuestas siguen igual.
+          </p>
+          <p className="guest-link">
+            Panel nuevo:{" "}
+            <a href={change.panel} target="_blank" rel="noopener noreferrer">
+              {change.panel}
+            </a>
+          </p>
+          <div className="actions">
+            <CopyButton text={change.message} label="Copiar mensaje para Etsy" />
+            <CopyButton text={change.messageEn} label="Mensaje en inglés" />
+            <CopyButton text={change.panel} label="Copiar solo el enlace" />
+          </div>
+        </section>
+      )}
+      {changeFailed && (
+        <p className="error" role="alert">
+          No se pudo cambiar la clave del panel. Vuelve a intentarlo.
+        </p>
+      )}
 
       <div className="stats">
         <div className="stat">
@@ -174,6 +208,16 @@ export default async function AdminHome({ searchParams }: { searchParams: Search
                           Panel
                         </a>
                         <a href={`/admin/evento?key=${k}&id=${e.id}`}>Editar</a>
+                        <form action={changeHostKeyAction} className="inline-form confirm-form">
+                          <input type="hidden" name="key" value={key} />
+                          <input type="hidden" name="id" value={e.id} />
+                          <ConfirmSubmit
+                            label="Cambiar clave del panel"
+                            confirmLabel="Sí, cambiarla"
+                            pendingLabel="Cambiando…"
+                            warning="El enlace que tiene la clienta dejará de abrir."
+                          />
+                        </form>
                       </td>
                     </tr>
                   );

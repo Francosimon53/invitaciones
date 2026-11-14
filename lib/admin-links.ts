@@ -1,7 +1,7 @@
 import "server-only";
 import { siteUrl } from "./site-url";
 import { eventLink, panelLink } from "./invite";
-import { deliveryMessage, reviewMessage } from "./messages";
+import { deliveryMessage, newPanelMessage, reviewMessage } from "./messages";
 import type { AdminEventRow } from "./types";
 
 export interface SavedLinks {
@@ -27,5 +27,22 @@ export async function linksFor(ev: AdminEventRow): Promise<SavedLinks> {
     delivery: deliveryMessage(args),
     reviewEn: reviewMessage(args, "en"),
     deliveryEn: deliveryMessage(args, "en"),
+  };
+}
+
+export interface PanelChange {
+  panel: string;
+  message: string;
+  messageEn: string;
+}
+
+/** Enlace nuevo del panel y el aviso para la clienta, después de cambiarle la clave. */
+export async function panelChangeFor(ev: AdminEventRow): Promise<PanelChange> {
+  const site = await siteUrl();
+  const args = { siteUrl: site, slug: ev.slug, hostKey: ev.host_key, hostName: ev.host_name, honoree: ev.honoree };
+  return {
+    panel: panelLink(site, ev.slug, ev.host_key),
+    message: newPanelMessage(args),
+    messageEn: newPanelMessage(args, "en"),
   };
 }
