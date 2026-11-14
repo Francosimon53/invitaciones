@@ -658,10 +658,9 @@ insert into storage.buckets (id, name, public, file_size_limit, allowed_mime_typ
 values ('inv-covers', 'inv-covers', true, 409600, array['image/jpeg'])
 on conflict (id) do update set public = true, file_size_limit = 409600, allowed_mime_types = array['image/jpeg'];
 
+-- Sin regla SELECT a propósito: al ser público, cada portada se lee por su URL directa; una regla SELECT solo
+-- serviría para que cualquiera listara los archivos (ver 0004).
 drop policy if exists "inv_covers_public_read" on storage.objects;
-create policy "inv_covers_public_read" on storage.objects
-  for select to anon, authenticated
-  using (bucket_id = 'inv-covers');
 
 drop policy if exists "inv_covers_insert_named" on storage.objects;
 create policy "inv_covers_insert_named" on storage.objects

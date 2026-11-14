@@ -84,3 +84,7 @@ Migraciones en `supabase/migrations/`. Claves: la de Simón en `private.settings
 `private.inv_event_keys`, generada al crear el evento. Una respuesta por persona, con las mismas reglas que la invitación de
 Stephanie; si alguien confirmó por el enlace general y después se agrega a la lista con el mismo nombre, su respuesta pasa a
 ser la de ese invitado.
+
+Los buckets de portadas (`inv-covers` y `covers`) no tienen regla SELECT a propósito: las portadas se leen por su URL
+directa y así nadie puede listar los archivos, cuyos nombres llevan el enlace del evento y el código de cada invitado
+(migración `0004`). No volver a crearla.
