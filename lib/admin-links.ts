@@ -10,6 +10,9 @@ export interface SavedLinks {
   panel: string;
   review: string;
   delivery: string;
+  /** Los mismos mensajes en inglés, para las compradoras que escriben en inglés. */
+  reviewEn: string;
+  deliveryEn: string;
 }
 
 /** Enlaces y mensajes listos para pegar en Etsy. */
@@ -22,5 +25,7 @@ export async function linksFor(ev: AdminEventRow): Promise<SavedLinks> {
     panel: panelLink(site, ev.slug, ev.host_key),
     review: reviewMessage(args),
     delivery: deliveryMessage(args),
+    reviewEn: reviewMessage(args, "en"),
+    deliveryEn: deliveryMessage(args, "en"),
   };
 }

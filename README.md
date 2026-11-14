@@ -20,7 +20,7 @@ la mamá. Se vende en Etsy: la compradora llena un formulario, Simón revisa y p
 | Clienta (mamá) | Invitados, enlaces y WhatsApp | `/<evento>/panel/invitados?key=<clave>` |
 | Clienta (mamá) | Vista previa de un borrador | `/<evento>?vista=<clave>` |
 | Compradora de Etsy | Formulario de datos en español o inglés | `/pedido` (o `/pedido?estilo=lila&idioma=en`) |
-| Simón | Pedidos e invitaciones | `/admin?key=<clave de Simón>` |
+| Simón | Pedidos e invitaciones | `/admin?key=<clave de Simón>`; después de entrar una vez, `/admin` solo: el navegador recuerda la clave un año (`proxy.ts`) |
 | Etsy / fotos | Muestras (no guardan respuestas) | `/demo/<estilo>`: una por cada estilo de `lib/themes.ts` (`/demo/azul`, `/demo/aurora`, `/demo/cerezos`…) |
 | WhatsApp | Portadas | estáticas en Storage (`inv-covers`); si faltan, `/api/cover` |
 
@@ -32,7 +32,7 @@ la mamá. Se vende en Etsy: la compradora llena un formulario, Simón revisa y p
 3. «Crear invitación»: el formulario sale precargado. Revisar, traducir al otro idioma lo que la clienta escribió
    (frase, palabras, vestimenta) y «Publicar» directo: no hay vista previa para aprobar.
    Al publicar se generan las portadas del enlace general y el pedido pasa a «entregado».
-4. Copiar el «mensaje de entrega» y pegarlo en la conversación del pedido en Etsy. Si después la clienta pide un cambio,
+4. Copiar el «mensaje de entrega» (hay versión en español y en inglés) y pegarlo en la conversación del pedido en Etsy. Si después la clienta pide un cambio,
    se corrige en el mismo formulario y el enlace no cambia. El «mensaje de revisión» queda para casos especiales.
 5. La clienta pega su lista en su panel: cada invitado recibe su enlace con su nombre y su portada. Ella ve la
    invitación antes que nadie, porque los invitados solo la reciben cuando ella manda los enlaces.
@@ -62,6 +62,8 @@ Hay 19 estilos en tres familias (`lib/themes.ts`). Por dentro todos son la misma
 - El movimiento de cada estilo está en `lib/effects.ts` y lo dibuja `components/magic-scene.ts` sobre el mismo lienzo de
   los fuegos artificiales. El botón del encabezado lo pausa y su etiqueta nombra lo que se mueve («Pausar pétalos»).
   Lo que vive en el cielo (estrellas, aurora, rayos, palomas) se apaga al bajar por la invitación.
+- Los textos fijos que hablan de noche y de estrellas («Nos vemos bajo las estrellas», «La música de esta noche»…) cambian
+  en los estilos de día por otros que sirven a cualquier hora (`lib/i18n.ts`). La frase de la portada es la que elige la clienta.
 
 Para agregar un estilo: definir sus parámetros en `THEMES` o `DAY_THEMES` del script (y, si es de día, poner su castillo
 en `scripts/themes/dia/`), correr el script, agregarlo a `lib/themes.ts` (grupo y textos), darle movimiento en

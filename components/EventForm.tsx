@@ -204,7 +204,11 @@ export function EventForm({ adminKey, v }: { adminKey: string; v: EventFormValue
             <CopyButton text={state.links.review} label="Copiar mensaje de revisión" />
             <CopyButton text={state.links.delivery} label="Copiar mensaje de entrega" />
           </div>
-          <p className="muted small">Pega el mensaje en la conversación del pedido en Etsy.</p>
+          <div className="actions">
+            <CopyButton text={state.links.reviewEn} label="Mensaje de revisión en inglés" />
+            <CopyButton text={state.links.deliveryEn} label="Mensaje de entrega en inglés" />
+          </div>
+          <p className="muted small">Pega el mensaje en la conversación del pedido en Etsy, en el idioma en que te escribe la clienta.</p>
         </section>
       )}
     </form>
